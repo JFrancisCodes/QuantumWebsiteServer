@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<h1>Animations for Quantum Mechanics</h1>
+{% endblock %}
+
+
+{% block body %}
+<h2> Gaussian Asymptotics App</h2>
+<script>
+    function runGaussianAsymp() {
+        fetch('/run_gaussian_asymp', {
+            method: 'POST',
+        }).then(response => {
+            if (response.ok) {
+                // Handle the response if needed
+            } else {
+                // Handle the response in case of an error
+            }
+        });
+    }
+</script>
+
+<button onclick="runGaussianAsymp()">Run Theorem App</button>
+
+
+{% endblock %}

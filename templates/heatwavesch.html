@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block head %}
+    
+{% endblock %}
+
+{% block body %}
+<h1 style="margin-bottom: 10px;">Heat Wave and Schrödinger Equation</h1>
+
+<form method="POST" action="/qanim/play_hws">  
+    <label for="n" style="color:rgb(47, 47, 47);" >N:</label>
+    <input type="range" name="n" id="n" min="0" max="10" step="1" required><br>
+    <output for="n" id="n-output" style="color:rgb(47, 47, 47);" >1</output><br>
+
+    <label for="m" style="color:rgb(47, 47, 47);" >M:</label>
+    <input type="range" name="m" id="m" min="0" max="10" step="1" required><br>
+    <output for="m" id="m-output" style="color:rgb(47, 47, 47);" >1</output><br>
+
+    <br> 
+
+    <button type="submit" style="color:rgb(47, 47, 47);" >Generate Animations</button>
+</form>
+
+<script>
+    const nInput = document.getElementById("n");
+    const nOutput = document.getElementById("n-output");
+    nOutput.textContent = nInput.value;
+
+    const mInput = document.getElementById("m");
+    const mOutput = document.getElementById("m-output");
+    mOutput.textContent = mInput.value;
+
+    nInput.addEventListener("input", function () {
+        nOutput.textContent = nInput.value;
+    });
+
+    mInput.addEventListener("input", function () {
+        mOutput.textContent = mInput.value;
+    });
+
+</script>
+
+{% if mp4_filename1 %}
+<div style="text-align: center;">
+    <h3 style="margin-bottom: 0px; text-align: center;">Animations with N = {{ request.form.n }} and M = {{ request.form.m }}</h3>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-evenly; align-items: center;">
+    <div style="flex: 1; text-align: center;">
+        <h4 style="margin-bottom: 0px;">Heat Equation</h4>
+        <video width="600" height="500" controls>
+            <source src="https://www.math.uni-tuebingen.de/qanim/static/movies/{{ mp4_filename1 }}"  type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div style="flex: 1; text-align: center;">
+        <h4 style="margin-bottom: 0px;">Wave Equation</h4>
+        <video width="600" height="500" controls>
+            <source src="https://www.math.uni-tuebingen.de/qanim/static/movies/{{ mp4_filename2 }}"  type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div style="flex: 1; text-align: center;">
+        <h4 style="margin-bottom: 5px; text-align: center;">Schrödinger Equation</h4>
+        <video width="400" height="500" controls>
+            <source src="https://www.math.uni-tuebingen.de/qanim/static/movies/{{ mp4_filename3 }}"  type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</div>
+{% endif %}
+
+<h3>
+    Here we look at the differences and similarities between the Heat, Wave and Schrödinger eqautions. These are
+    The Heat Equation
+
+</h3>
+
+<h3>
+
+    
+    <img src="https://www.math.uni-tuebingen.de/qanim/static/images/heat.png" alt="h" width="100">
+
+</h3>
+
+<h3>
+
+    The Wave Equation 
+
+</h3>
+
+<h3>
+
+    <img src="https://www.math.uni-tuebingen.de/qanim/static/images/wave.png" alt="w" width="100">
+
+</h3>
+
+<h3>
+
+    The Schrödinger Equation
+</h3>
+
+<h3>
+
+    <img src="https://www.math.uni-tuebingen.de/qanim/static/images/schrodinger.png" alt="s" width="100">
+
+</h3>
+
+<h3>
+
+    We can see that these equations share a simlar form. In the animations above we set the initial conditions to be
+
+</h3>
+
+<h3>
+
+    <img src="https://www.math.uni-tuebingen.de/qanim/static/images/sin.png" alt="sin " width="300">
+
+</h3>
+
+<h3>
+
+    and we watch how these initial conditions evolve under each equation. For the Schrödinger equation we hilite the seperate
+    modes in yellow and the sum (i.e the total wavefunction) in red. The individual modes rotate at a ffixed speed, while the sum 
+    can behave in a quite complicated fashion. 
+
+
+</h3>
+
+
+
+{% endblock %}

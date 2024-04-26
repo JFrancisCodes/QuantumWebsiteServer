@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>Double Gaussian Input</title>
+{% endblock %}
+
+{% block body %}
+    <h1>Double Gaussian Input</h1>
+    
+    <form method="POST" action="/qanim/play_double_gaussian">
+        <label for="sigma1" style="color:rgb(47, 47, 47);" >Standard Deviation 1 (Range 0.25-1):</label>
+        <input type="range" name="sigma1" id="sigma1" min="0.25" max="1" step="0.25" required><br>
+        <output for="sigma1" id="sigma1-output" style="color:rgb(47, 47, 47);" >0.25</output><br>
+    
+        <label for="momentum1" style="color:rgb(47, 47, 47);" >Momentum 1 (0 to 10):</label>
+        <input type="range" name="momentum1" id="momentum1" min="0" max="10" step="2" required><br>
+        <output for="momentum1" id="momentum1-output" style="color:rgb(47, 47, 47);" >0</output><br>
+
+        <label for="sigma2" style="color:rgb(47, 47, 47);" >Standard Deviation 2 (Range 0.25-1):</label>
+        <input type="range" name="sigma2" id="sigma2" min="0.25" max="1" step="0.25" required><br>
+        <output for="sigma2" id="sigma2-output" style="color:rgb(47, 47, 47);" >0.25</output><br>
+    
+        <label for="momentum2" style="color:rgb(47, 47, 47);" >Momentum 2 (-10 to 0):</label>
+        <input type="range" name="momentum2" id="momentum2" min="-10" max="0" step="2" required><br>
+        <output for="momentum2" id="momentum2-output">0</output><br>
+
+        <label for="weight" style="color:rgb(47, 47, 47);" >Weight (0.25 to 0.75):</label>
+        <input type="range" name="weight" id="weight" min="0.25" max="0.75" step="0.25" required><br>
+        <output for="weight" id="weight-output" style="color:rgb(47, 47, 47);" >0.5</output><br>
+
+        <h1 style="margin-bottom: 5px;"></h1>
+
+        <button type="submit" style="color:rgb(47, 47, 47);" >Generate Animations</button>
+    </form>
+
+    <script>
+        const sigma1Input = document.getElementById("sigma1");
+        const sigma1Output = document.getElementById("sigma1-output");
+        sigma1Output.textContent = sigma1Input.value;
+
+        const momentum1Input = document.getElementById("momentum1");
+        const momentum1Output = document.getElementById("momentum1-output");
+        momentum1Output.textContent = momentum1Input.value;
+
+        const sigma2Input = document.getElementById("sigma2");
+        const sigma2Output = document.getElementById("sigma2-output");
+        sigma2Output.textContent = sigma2Input.value;
+
+        const momentum2Input = document.getElementById("momentum2");
+        const momentum2Output = document.getElementById("momentum2-output");
+        momentum2Output.textContent = momentum2Input.value;
+
+        const weightInput = document.getElementById("weight");
+        const weightOutput = document.getElementById("weight-output");
+        weightOutput.textContent = weightInput.value;
+
+        sigma1Input.addEventListener("input", function () {
+            sigma1Output.textContent = sigma1Input.value;
+        });
+
+        momentum1Input.addEventListener("input", function () {
+            momentum1Output.textContent = momentum1Input.value;
+        });
+        
+        sigma2Input.addEventListener("input", function () {
+            sigma2Output.textContent = sigma2Input.value;
+        });
+
+        momentum2Input.addEventListener("input", function () {
+            momentum2Output.textContent = momentum2Input.value;
+        });
+
+        weightInput.addEventListener("input", function () {
+            weightOutput.textContent = weightInput.value;
+        });
+        
+
+    </script>
+    
+    {% if mp4_filename1 %}
+
+    <div style="text-align: center;">
+        <h3 style="margin-bottom: 0px; text-align: center;">Animation with Standard Deviation 1 = {{ request.form.sigma1 }}, Momentum 1 = {{ request.form.momentum1 }}, Standard Deviation 2 = {{ request.form.sigma2 }}, Momentum 2 = {{ request.form.momentum2 }} and Weight = {{ request.form.weight }}  </h3>
+    </div>
+
+    <div style="display: flex; justify-content: space-between;">
+        <div style="flex: 1;">
+            <h4 style="margin-bottom: 0px; text-align: center;">Short Time Behavior</h4>
+            <video width="600" height="500" controls>
+                <source src="https://www.math.uni-tuebingen.de/qanim/static/movies/{{ mp4_filename1 }}" type="video/mp4">
+                Your browser does not support the video tag.
+        </video>
+        </div>
+        <div style="flex: 1;">
+        <h4 style="margin-bottom: 0px; text-align: center;">Long Time Behavior</h4>
+        <video width="600" height="500" controls>
+            <source src="https://www.math.uni-tuebingen.de/qanim/static/movies/{{ mp4_filename2 }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </div>
+    </div>
+
+    {% endif %}
+
+    <h3>In the Single Gaussian section we explore how "Gaussian Wavepackets" evolve under the Schrödinger equation. Here 
+        we expand our focus. As all students will know, the Schrödinger equation is linear, and thus allows for a superposition
+        of solutions. Here we explore adding two seperate "Gaussian Wavepacket" solutions together.
+    </h3>
+
+    <h3>We center the solutions at the positions -10 and 10 on the x-axis. By toggeling the sliders above, you can change
+        the standard deviations, momentums and the 'weight' of the solutions. Play around with the parameters to see 
+        how different initial conditions give rise to widely different behaviour in both short and long time. 
+    </h3>
+
+    <h3>The weight here refers to the coefficients of each solution. As you vary this you can observe a greater
+        dominace of one solution over another.
+    </h3>
+
+    <h3>The animation on the right is the same visualisation of the asymptotic cionvergence of the solution. We are again showing the 
+        relation: 
+    </h3>
+    
+        
+    <img src="https://www.math.uni-tuebingen.de/qanim/static/images/phi3.png" alt="phi23" width="300">
+
+    <h3>
+
+        Students should ask: How does the rate of convergence compare to the single Gaussian case? (note the difference in time scale); and
+        how do different initial conditions affect the rate of convergence?. 
+
+        Students should also see if they can get inteference to occur in both the short and long term animation. What is the physical
+        meaning of this interference?
+    
+    </h3>
+    
+{% endblock %}
